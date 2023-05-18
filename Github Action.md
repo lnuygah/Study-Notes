@@ -22,54 +22,45 @@ action是可以复用的拓展，用来简化workflow 。
 
 
 
-**Workflows**
+`Workflows`
+
 Workflow是可配置的自动化进程，它会运行一个或多个Jobs。
-
 Workflow通过yaml配置文件来定义
-
 Worklofw的触发方式有两种：
-
 1.手动触发 2. 通过定义触发事件自动触发 3. 通过Post 一个Rest API请求。
-
 一个repo可以有多个Workflow
-
 可以在一个Workflow中引用另一个Workflow
 
-**Events**
+`Events`
+
 Events是一种能够触发Workflow运行的特定的活动，包括创建pull请求，开启一个issue或者进行一次commit，主要是体现于yml文件上面的on关键字，通过此定义触发workflows的Events。
 
-**Jobs**
+`Jobs`
+
 Job是Step的集合，一个Job包含若干个Steps。
-
 每个Steps可以是将被执行的Shell命令或脚本。
-
 不同的Jobs可以在不同的虚拟环境runner上执行若干个命令或脚本。
-
 但一个Job只能在相同的runner上执行workflow的一系列步骤，正因如此，一个Job中的若干个Steps可以共享数据。
-
 Job之间可以配置依赖，默认情况下Jobs彼此之间没有依赖且并行执行。
-
 在配置了依赖的情况下，一个Job需要等待它所依赖的Job运行完成后才能运行。
 
-**Acitons**
-Action是Github Acitons 平台自定义的应用，可以执行复杂但频繁重复的任务。
+`Acitons`
 
+Action是Github Acitons 平台自定义的应用，可以执行复杂但频繁重复的任务。
 也就是说将重复使用的Workflow抽象成一个模块，方便重复使用，减少重复性代码。
 
-**Runners**
+`Runners`
+
 Runner是在workflow被触发时用来运行workflow的服务器。
-
 每个Runner每次只能运行一个Job
-
 Github提供了Ubuntu Linux，Microsoft Windows， macO runner来运行workflows。
-
 每个workflow在全新的初始化的虚拟机上执行。
 
 如果有需要，还可以使用自己的服务器主机来运行workflow。
 
 
 
-**Example：helloWorkflow.yaml**
+`Example`**：helloWorkflow.yaml**
 
 ```yaml
 name: learn-github-actions
