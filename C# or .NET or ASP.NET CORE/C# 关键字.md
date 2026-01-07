@@ -113,3 +113,110 @@ sealed 关键字用于修饰类、方法或属性，表示该类或成员不可�
 ### 7. this 关键字作用
 
 this 关键字表示当前对象的引用，可以用于访问当前对象的成员。它可以用来区分局部变量和实例变量、在构造函数中调用其他构造函数、传递当前对象给其他方法等。
+
+### 8. base 关键字作用
+
+base 关键字表示基类的引用，可以用于访问基类的成员。它可以用来在子类中调用基类的构造函数、调用基类的方法或属性等。
+
+### 9. using 关键字的作用
+
+- using指令为命名空间创建别名，或导入在其他命名空间中定义的类型
+- using 语句定义一个范围，在此范围的末尾将释放对象资源，实现了IDisposiable的类在using中创建，using结束后会自定调用该对象的Dispose方法，释放资源。
+
+### 10. sizeof 关键字作用
+
+- sizeof 运算符返回给定类型的变量所占用的字节数。 
+- sizeof 运算符的参数必须是一个[非托管类型](https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/unmanaged-types)的名称，或是一个[限定](https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-guide/generics/constraints-on-type-parameters#unmanaged-constraint)为非托管类型的类型参数。
+
+> 补充：类型是 **非托管类型** （如果类型为以下任一类型）：
+>
+> - `sbyte`、`byte`、、`short``ushort`、`int`、`uint``long``ulong``nint``nuint``char``float``double`或 `decimal``bool`
+> - 任何 [枚举](https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/enum) 类型
+> - 任何 [指针](https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/unsafe-code#pointer-types) 类型
+> - 一个 [元组](https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/value-tuples) ，其成员都是非托管类型
+> - 任何仅包含非托管类型的字段的用户定义 [结构](https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/struct) 类型。
+>
+> 可以使用 [`unmanaged` 约束](https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-guide/generics/constraints-on-type-parameters#unmanaged-constraint) 指定类型参数是非指针、不可为 null 的非托管类型。
+
+### 11. delegate 关键字作用
+
+- delegate 关键字用于声明委托类型，即代表一个或多个方法的对象。
+- 使用 delegate 可以实现事件和回调机制，简化方法的调用和管理。
+
+### 12. **C# 中的 in 关键字的作用**
+
+in 修饰符通过只读引用传递参数，避免复制大值类型的开销。编译器在参数为字面量、属性返回值或需要类型转换时自动创建临时变量。若 API 明确要求按引用传递参数，应优先使用 ref readonly 修饰符以强化调用语义。
+
+> 使用 in 参数可优化性能，尤其适用于需要频繁传递大型结构体（如循环或关键代码中）的场景。它通过只读引用传递参数，避免复制数据的开销，同时确保方法内部不会修改参数状态。调用时显式添加 in 修饰符，明确要求按引用而非值传递，从而提升效率。
+
+```c#
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        int x = 5;
+
+        MultiplyByTwo(in x);
+
+        Console.WriteLine(x); // 输出 5
+    }
+
+    static void MultiplyByTwo(in int number)
+    {
+        // 无法修改 in 参数的值
+        // number *= 2; // 编译错误
+
+        // 仅能读取 in 参数的值
+        Console.WriteLine(number * 2); // 输出 10
+    }
+}
+```
+
+### 13. C# 中的 ref 关键字作用
+
+- 参数在使用 ref 关键字进行引用传递时，必须在方法调用之前对其进行初始化。
+- ref 关键字既可以在进入方法之前初始化参数的值，也可以在方法内部对参数进行修改。
+- ref 参数在进入方法时保持原始值，并在方法结束后将值带回到调用处。
+
+### 14. C# 中的 out 关键字作用
+
+- 参数在使用 out 关键字进行引用传递时，不需要在方法调用之前进行初始化。
+- out 关键字通常用于表示方法返回多个值的情况，或者用于修改方法外部的变量。
+- out 参数必须在方法内部进行初始化，并确保在方法结束前完成赋值操作。方法内部没有为 out 参数赋值的情况下，方法调用将会导致编译错误。
+
+### 15. C#中参数传递 ref 与 out 区别
+
+- **ref 指定此参数由引用传递**：指定的参数在函数调用时必须先初始化（有进有出）。
+- **out 指定此参数由引用传递**：指定的参数在进入函数时会清空参数值，因此该参数必须在调用函数内部进行初始化赋值操作（无进有出）。
+
+**总结：**
+
+- ref 和 out 都用于引用传递参数。
+- ref 参数在方法调用前必须被初始化，而 out 参数不需要。
+- ref 参数可以保留原始值并在方法内部进行修改，而 out 参数必须在方法内部进行初始化赋值。
+
+### 16. as和is的区别
+
+- is 只是做类型兼容判断，并不执行真正的类型转换。返回true或false，不会返回null，对象为null也会返回false。
+- as运算符将表达式结果显式转换为给定的引用类型或可以为null值的类型。 如果无法进行转换，则as运算符返回 null。 
+
+**总结：**
+as模式的效率要比is模式的高，因为借助is进行类型转换的化，需要执行两次类型兼容检查。而as只需要做一次类型兼容，一次null检查，null检查要比类型兼容检查快。
+
+### 17. null类型
+
+null 关键字是表示不引用任何对象的空引用的文字值。 null是引用类型变量的默认值。 普通值类型不能为 null，[可为空的值类型](https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/nullable-value-types)除外。
+
+### 18. new关键字作用
+
+- 运算符：创建类型的新实例。
+- 修饰符：可以显式隐藏从基类继承的成员。
+-  泛型约束：泛型约束定义，约束可使用的泛型类型。
+
+### 19. return、continue、break区别
+
+- **return**：结束整个方法，return关键字并不是专门用于跳出循环的，return的功能是结束一个方法。 一旦在循环体内执行到一个return语句，return语句将会结束该方法，循环自然也随之结束。与continue和break不同的是，return直接结束整个方法，不管这个return处于多少层循环之内。
+- **continue**：结束本次循环，然后持续进行下一次循环。
+- **break**：break用于完全结束一个循环，跳出循环体。不管是哪种循环，一旦在循环体中遇到break，系统将完全结束循环，开始执行循环之后的代码。
