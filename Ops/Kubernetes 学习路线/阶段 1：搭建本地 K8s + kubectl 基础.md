@@ -436,7 +436,14 @@ minikube ssh -- 'ls -l /etc/docker/daemon.json*'
 当前节点的 daemon.json 是：
 
 ```json
-{"exec-opts":["native.cgroupdriver=cgroupfs"],"log-driver":"json-file","log-opts":{"max-size":"100m"},"storage-driver":"overlay2"}
+{
+	"exec-opts": ["native.cgroupdriver=cgroupfs"],
+	"log-driver": "json-file",
+	"log-opts": {
+		"max-size": "100m"
+	},
+	"storage-driver": "overlay2"
+}
 ```
 
 我们在这个基础上加上 `registry-mirrors`：
