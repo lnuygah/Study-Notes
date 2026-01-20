@@ -509,5 +509,3 @@ kubectl get cm
 ```
 
 ![35](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/35.png)
-
-如果你希望我继续按同样格式写 **阶段 3（Ingress + Secret + 资源限制/扩缩容 + 常见网络排障）**，我也可以直接接着出一版（仍以 minikube + DaoCloud 镜像源为前提）。
