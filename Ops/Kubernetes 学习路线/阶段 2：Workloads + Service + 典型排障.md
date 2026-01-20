@@ -36,7 +36,7 @@ kubectl config view --minify | grep namespace
 
 - 输出包含 `namespace: stage2`
 
-![21](Ops/Kubernetes 学习路线/images/21.png)
+![21](images/21.png)
 
 ------
 
@@ -76,7 +76,7 @@ kubectl get deploy,rs,pods -o wide
 - `kubectl get deploy`：READY 为 `2/2`
 - `kubectl get pods`：两个 Pod 都是 `Running`
 
-![22](Ops/Kubernetes 学习路线/images/22.png)
+![22](images/22.png)
 
 ------
 
