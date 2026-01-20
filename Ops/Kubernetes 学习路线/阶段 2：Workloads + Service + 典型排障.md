@@ -391,9 +391,11 @@ kubectl rollout status deploy/crash-demo
 
 ### 概念解释
 
-- **readinessProbe 失败意味着什么**：容器可能还在跑（Running），但 Kubernetes 认为“还不能接流量”，所以**不会把它加入 Service endpoints**。
-- **这会导致什么现象**：你访问 Service 可能超时/无后端，即使 Pod 看起来是 Running。
-- **对比 livenessProbe**：liveness 失败会触发重启；readiness 失败不会重启，只是“不接流量”。
+**readinessProbe 失败：容器可能还在跑（Running），但 Kubernetes 认为“还不能接流量”，所以**不会把它加入 Service endpoints**。
+
+**这会导致什么现象**：你访问 Service 可能超时/无后端，即使 Pod 看起来是 Running。
+
+**对比 livenessProbe**：liveness 失败会触发重启；readiness 失败不会重启，只是“不接流量”。
 
 ### 现象制造（探测一个不存在的路径）
 
