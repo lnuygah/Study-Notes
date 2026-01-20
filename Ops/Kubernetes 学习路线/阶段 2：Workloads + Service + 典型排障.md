@@ -128,7 +128,7 @@ curl -I "$(minikube service nginx-svc --url)"
 
 - 返回 `HTTP/1.1 200 OK`
 
-![23](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/23.png)
+![23](images/23.png)
 
 ------
 
@@ -196,7 +196,7 @@ kubectl rollout status deploy/nginx-deploy
 - 更新与回滚都能顺利完成
 - Pod 在更新过程会“新旧交替”
 
-![24](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/24.png)
+![24](images/24.png)
 
 ------
 
@@ -285,9 +285,9 @@ curl "$(minikube service nginx-svc --url)" | head
 
 - 输出包含 `Hello Stage 2`
 
-![25](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/25.png)
+![25](images/25.png)
 
-![26](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/26.png)
+![26](images/26.png)
 
 ------
 
@@ -302,7 +302,7 @@ kubectl set image deploy/nginx-deploy nginx=nginx:9.99
 kubectl get pods -w
 ```
 
-![27](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/27.png)
+![27](images/27.png)
 
 ### 排查（三板斧）
 
@@ -323,7 +323,7 @@ kubectl rollout status deploy/nginx-deploy
 - Pod 恢复 Running
 - Events 不再持续 Failed/BackOff
 
-![28](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/28.png)
+![28](images/28.png)
 
 ------
 
@@ -357,7 +357,7 @@ kubectl apply -f deploy-crash.yaml
 kubectl get pods -l app=crash -w
 ```
 
-![29](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/29.png)
+![29](images/29.png)
 
 ### 排查
 
@@ -366,7 +366,7 @@ kubectl describe pod -l app=crash | tail -n 50
 kubectl logs -l app=crash --tail=50
 ```
 
-![30](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/30.png)
+![30](images/30.png)
 
 ### 修复（改成长期运行）
 
@@ -383,7 +383,7 @@ kubectl rollout status deploy/crash-demo
 - Pod 变为 Running
 - 不再反复重启
 
-![31](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/31.png)
+![31](images/31.png)
 
 ------
 
@@ -432,7 +432,7 @@ kubectl apply -f deploy-readiness-bad.yaml
 kubectl get pods -l app=ready -w
 ```
 
-![32](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/32.png)
+![32](images/32.png)
 
 ### 排查（重点看 endpoints）
 
@@ -441,7 +441,7 @@ kubectl describe pod -l app=ready | tail -n 50
 kubectl get endpointslices -o wide
 ```
 
-![33](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/33.png)
+![33](images/33.png)
 
 ### 修复（路径改成 `/`）
 
@@ -483,7 +483,7 @@ curl -I http://localhost:8081
 - endpoints 出现对应 Pod IP
 - 通过port-forward 的方式本地验证 ping 通
 
-![34](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/34.png)
+![34](images/34.png)
 
 ------
 
@@ -508,4 +508,4 @@ kubectl get svc
 kubectl get cm
 ```
 
-![35](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/35.png)
+![35](images/35.png)

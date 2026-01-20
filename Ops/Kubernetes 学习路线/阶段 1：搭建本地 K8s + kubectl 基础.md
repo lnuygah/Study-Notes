@@ -32,7 +32,7 @@ kubectl version --client
 
 - 输出中能看到 `Client Version: v...`
 
-![8](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/8.png)
+![8](images/8.png)
 
 ## 1.1 目标知识点 2：minikube 是什么？它如何在本机“造”出一个 K8s
 
@@ -57,7 +57,7 @@ minikube version
 
 - 输出里能看到 minikube 的版本信息
 
-![9](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/9.png)
+![9](images/9.png)
 
 ------
 
@@ -89,9 +89,9 @@ kubectl get nodes -o wide
 - `minikube status` 显示 Running/Configured
 - `kubectl get nodes` 至少 1 个节点，且 `STATUS=Ready`
 
-![10](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/10.png)
+![10](images/10.png)
 
-![11](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/11.png)
+![11](images/11.png)
 
 ---
 
@@ -114,7 +114,7 @@ kubectl config current-context
 
 - 能看到 `minikube` 作为一个 context（通常当前就是它）
 
-![12](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/12.png)
+![12](images/12.png)
 
 ---
 
@@ -136,7 +136,7 @@ kubectl get ns
 
 - 能看到 `default`、`kube-system` 等
 
-![13](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/13.png)
+![13](images/13.png)
 
 ------
 
@@ -161,7 +161,7 @@ kubectl config view --minify | grep namespace
 - `grep namespace` 显示 `namespace: learn`
    （之后练习就不用总加 `-n learn`）
 
-![14](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/14.png)
+![14](images/14.png)
 
 ------
 
@@ -202,7 +202,7 @@ kubectl describe pod web
   - 镜像信息
   - **Events**（后续排障最关键入口）
 
-![15](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/15.png)
+![15](images/15.png)
 
 ------
 
@@ -229,7 +229,7 @@ kubectl get pods -l tier=backend
 - `-l app=demo` 能一次看到 `api` 和 `front`
 - `-l tier=backend` 只看到 `api`
 
-![17](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/17.png)
+![17](images/17.png)
 
 ------
 
@@ -274,7 +274,7 @@ kubectl describe pod demo-pod
 - `demo-pod` 为 `Running`
 - `describe` Events 无明显异常
 
-![18](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/18.png)
+![18](images/18.png)
 
 ------
 
@@ -305,7 +305,7 @@ curl -I http://localhost:8080
 - port-forward 终端会输出转发日志
 - `Ctrl+C` 停止 port-forward
 
-![19](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/19.png)
+![19](images/19.png)
 
 ------
 
@@ -331,7 +331,7 @@ kubectl get pods
 
 - 显示 `No resources found`
 
-![19](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/19.png)
+![19](images/19.png)
 
 ------
 
@@ -393,13 +393,6 @@ minikube delete
 ```
 
 ------
-
-如果你阶段 1 跑通了，我可以继续按同样格式展开 **阶段 2**，并且只用 minikube：
- 我会给你 4 个“故意制造的故障案例”（ImagePullBackOff / CrashLoopBackOff / 端口不通 / readiness 不通过），让你把 `describe → Events → logs` 的排障套路练到肌肉记忆。
-
-
-
-
 
 ## 1.8步骤补充：
 
@@ -520,4 +513,4 @@ minikube ssh -- 'sudo mv /etc/docker/daemon.json.bak /etc/docker/daemon.json && 
 
 ------
 
-## ![16](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/16.png)
+## ![16](images/16.png)
