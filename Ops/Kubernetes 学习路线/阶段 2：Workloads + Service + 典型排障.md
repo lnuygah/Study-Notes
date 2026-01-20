@@ -432,35 +432,66 @@ kubectl apply -f deploy-readiness-bad.yaml
 kubectl get pods -l app=ready -w
 ```
 
+![32](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/32.png)
+
 ### 排查（重点看 endpoints）
 
 ```bash
 kubectl describe pod -l app=ready | tail -n 50
-kubectl get endpoints -o wide
+kubectl get endpointslices -o wide
 ```
+
+![33](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/33.png)
 
 ### 修复（路径改成 `/`）
 
-```
+```bash
 kubectl patch deploy ready-demo --type='json' -p='[
   {"op":"replace","path":"/spec/template/spec/containers/0/readinessProbe/httpGet/path","value":"/"}
 ]'
 kubectl rollout status deploy/ready-demo
-kubectl get endpoints -o wide
+
+cat > svc-ready.yaml <<'EOF'
+apiVersion: v1
+kind: Service
+metadata:
+  name: ready-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: ready
+  ports:
+    - port: 80
+      targetPort: 80
+EOF
+
+kubectl apply -f svc-ready.yaml
+kubectl get svc ready-svc
+
+kubectl get endpointslices -l kubernetes.io/service-name=ready-svc -o wide
+kubectl describe endpointslice -l kubernetes.io/service-name=ready-svc | grep -n "10.244.0.21" || echo "NOT FOUND"
+kubectl get pod -l app=ready -o wide
+kubectl get svc ready-svc -o jsonpath='{.spec.selector}{"\n"}'
+
+kubectl port-forward svc/ready-svc 8081:80
+curl -I http://localhost:8081
 ```
 
 ### 验证点
 
 - readiness 变为 Ready
 - endpoints 出现对应 Pod IP
+- 通过port-forward 的方式本地验证 ping 通
+
+![34](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/34.png)
 
 ------
 
 ## 2.10 阶段 2 清理（建议执行）
 
-```
+```bash
 kubectl delete deploy nginx-deploy crash-demo ready-demo --ignore-not-found
-kubectl delete svc nginx-svc --ignore-not-found
+kubectl delete svc nginx-svc ready-svc --ignore-not-found
 kubectl delete cm nginx-index --ignore-not-found
 ```
 
@@ -470,13 +501,13 @@ kubectl delete cm nginx-index --ignore-not-found
 
 执行下面命令，你应看到所有对象状态正常（或已清理干净）：
 
-```
+```bash
 kubectl get deploy
 kubectl get pods
 kubectl get svc
 kubectl get cm
 ```
 
-------
+![35](/Users/chensibin/workplace/company/dotnetcode/GitHub/Study-Notes/Ops/Kubernetes 学习路线/images/35.png)
 
 如果你希望我继续按同样格式写 **阶段 3（Ingress + Secret + 资源限制/扩缩容 + 常见网络排障）**，我也可以直接接着出一版（仍以 minikube + DaoCloud 镜像源为前提）。
